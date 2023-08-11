@@ -2,16 +2,17 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.*;
 
-class WordCounterGUI extends JFrame {
+class WordCounterApp extends JFrame {
     private JTextArea inputTextArea;
     private JTextField delimiterField;
     private JTextArea outputTextArea;
     private JButton analyzeButton;
 
-    public WordCounterGUI() {
-        setTitle("Word Counter GUI");
-        setSize(500, 400);
+    public WordCounterApp() {
+        setTitle("Word Counter App");
+        setSize(400, 300);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
 
@@ -42,11 +43,6 @@ class WordCounterGUI extends JFrame {
         String inputText = inputTextArea.getText();
         String delimiter = delimiterField.getText();
 
-        if (inputText.trim().isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Please enter valid text.", "Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-
         String[] arr = inputText.split(delimiter);
         outputTextArea.setText("");
 
@@ -59,8 +55,8 @@ class WordCounterGUI extends JFrame {
         outputTextArea.append("Number of unique words: " + hm.size() + "\n\n");
         outputTextArea.append("Frequencies of each word:\n\n");
 
-        for (String word : hm.keySet()) {
-            outputTextArea.append(word + " : " + hm.get(word) + "\n");
+        for (Map.Entry<String, Integer> entry : hm.entrySet()) {
+            outputTextArea.append(entry.getKey() + " : " + entry.getValue() + "\n");
         }
     }
 
@@ -68,7 +64,7 @@ class WordCounterGUI extends JFrame {
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-                WordCounterGUI app = new WordCounterGUI();
+                WordCounterApp app = new WordCounterApp();
                 app.setVisible(true);
             }
         });
